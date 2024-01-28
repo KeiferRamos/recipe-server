@@ -1,0 +1,218 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Recipe {
+  id: String!
+  title: String!
+  name: String!
+  image: String!
+  cooking_time: String!
+  tags: [String!]!
+  description: String!
+  ingredients: [String!]!
+  instruction: [String!]!
+  is_featured: Boolean!
+  similar: [Recipe!]!
+}
+
+type Address {
+  id: String!
+  block: String!
+  street: String!
+  barangay: String!
+  city: String!
+  province: String!
+  zip_code: String!
+}
+
+type Permission {
+  id: String!
+  scope: String!
+  description: String!
+}
+
+type Role {
+  id: String!
+  name: String!
+  permissions: [Permission!]!
+}
+
+type Admin {
+  id: String!
+  first_name: String
+  last_name: String
+  username: String!
+  contact_no: String
+  address: Address
+  email: String
+  roles: [Role!]!
+}
+
+type AccessTokenReturn {
+  access_token: String!
+}
+
+type Content {
+  id: String!
+  type: String!
+  value: String!
+}
+
+type Blog {
+  id: String!
+  title: String!
+  banner_image: String!
+  author: String!
+  content: [Content!]!
+}
+
+type Query {
+  AllRecipe: [Recipe!]!
+  Recipe(id: String!): Recipe!
+  AllAdmin: [Admin!]!
+  Admin(id: String!): Admin!
+  AllRole: [Role!]!
+  Role(id: String!): Role!
+  AllPermission: [Permission!]!
+  Permission(id: String!): Permission!
+  AllBlogs: [Blog!]!
+  Blog(id: String!): Blog!
+}
+
+type Mutation {
+  createRecipe(createRecipeInput: CreateRecipeInput!): Recipe!
+  updateRecipe(updateRecipeInput: UpdateRecipeInput!): Recipe!
+  removeRecipe(id: String!): Recipe!
+  createAdmin(createAdminInput: CreateAdminInput!): Admin!
+  login(loginAdminInput: loginAdminInput!): AccessTokenReturn!
+  updateUserRole(userRoleInput: UserRoleInput!): Admin!
+  updateAdmin(updateAdminInput: UpdateAdminInput!): Admin!
+  removeAdmin(id: String!): String!
+  createRole(createRoleInput: CreateRoleInput!): Role!
+  updateRole(updateRoleInput: UpdateRoleInput!): Role!
+  removeRole(id: String!): Role!
+  createPermission(createPermissionInput: CreatePermissionInput!): Permission!
+  updatePermission(updatePermissionInput: UpdatePermissionInput!): Permission!
+  removePermission(id: String!): Permission!
+  createBlog(createBlogInput: CreateBlogInput!): Blog!
+  updateBlog(updateBlogInput: UpdateBlogInput!): Blog!
+  removeBlog(id: String!): Blog!
+}
+
+input CreateRecipeInput {
+  title: String!
+  name: String!
+  cooking_time: String!
+  tags: [String!]!
+  image: String!
+  description: String!
+  ingredients: [String!]!
+  instruction: [String!]!
+  is_featured: Boolean!
+  similar: [String!]
+}
+
+input UpdateRecipeInput {
+  title: String
+  name: String
+  cooking_time: String
+  tags: [String!]
+  image: String
+  description: String
+  ingredients: [String!]
+  instruction: [String!]
+  is_featured: Boolean
+  similar: [String!]
+  id: String!
+}
+
+input CreateAdminInput {
+  first_name: String
+  last_name: String
+  username: String!
+  password: String!
+  verify: String!
+  admin_pass: String!
+  contact_no: String
+  address: CreateAddressInput
+  email: String
+}
+
+input CreateAddressInput {
+  block: String!
+  street: String!
+  barangay: String!
+  city: String!
+  province: String!
+  zip_code: String!
+}
+
+input loginAdminInput {
+  username: String!
+  password: String!
+}
+
+input UserRoleInput {
+  id: String!
+  role_name: String!
+}
+
+input UpdateAdminInput {
+  first_name: String
+  last_name: String
+  username: String
+  password: String
+  admin_pass: String
+  contact_no: String
+  address: CreateAddressInput
+  email: String
+}
+
+input CreateRoleInput {
+  name: String!
+  permissions: [String!]!
+}
+
+input UpdateRoleInput {
+  name: String
+  permissions: [String!]
+  id: String!
+}
+
+input CreatePermissionInput {
+  scope: String!
+  description: String!
+}
+
+input UpdatePermissionInput {
+  scope: String
+  description: String
+  id: String!
+}
+
+input CreateBlogInput {
+  title: String!
+  banner_image: String!
+  author: String!
+  content: [ContentInputType!]!
+}
+
+input ContentInputType {
+  type: String!
+  value: String!
+}
+
+input UpdateBlogInput {
+  title: String
+  banner_image: String
+  author: String
+  id: String!
+  content: [ContentInputWithIDType!]!
+}
+
+input ContentInputWithIDType {
+  id: String!
+  type: String!
+  value: String!
+}

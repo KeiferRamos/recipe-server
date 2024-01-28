@@ -1,0 +1,59 @@
+{
+  "recipe": {
+    "title": "Vice disrupt green juice, poutine quinoa austin artisan shaman prism.",
+    "name": "Williamsburg chartreuse praxis",
+    "description": "<p>Cupping narwhal bodega boys migas, keffiyeh occupy edison bulb butcher cardigan. Tote bag subway tile intelligentsia cray tumblr cred neutra ennui iceland fit narwhal vegan viral.</p><p>Crucifix pork belly chartreuse af you probably haven't heard of them kinfolk. Slow-carb shoreditch knausgaard cardigan neutral milk hotel tbh.</p>",
+    "tags": ["Vegetarian food", "Easy Recipe", "Cheap Meals"],
+    "cooking_time": "30 minutes",
+    "instruction": [
+      "Cook pasta according to package directions. Reserve 1 cup pasta water. Set aside.",
+      "Heat butter in a pan. Add chicken and garlic. Sear chicken until cooked.",
+      "Add Knorr Chicken Cube and pepper. Pour in cream and reserved pasta water. Let simmer.",
+      "Stir in cooked pasta, cheese, and Lady’s Choice Real Mayonnaise. Toss to combine. Garnish with parsley and serve immediately.",
+      "Get ready because this dish will take you all the way to Mexico and back home. Enjoy this with your friends and family so they can join you in your “travels” too!"
+    ],
+    "ingredients": [
+      "400 grams spaghetti noodles",
+      "3 cups pasta water, reserved from cooking noodles or plain water",
+      "250 grams ground pork",
+      "1 pc onion chopped",
+      "1 (160g) pack quick melt cheese, grated"
+    ],
+    "is_featured": false,
+    "similar": [],
+    "image": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  "blog": {
+    "title": "Vice disrupt green juice, poutine quinoa austin artisan shaman prism.",
+    "banner_image": "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "author": "keffiyeh Ramos - Frontend Developer",
+    "content": [
+      {
+        "type": "text",
+        "value": "hello world"
+      }
+    ]
+  },
+  "user": {
+    "first_name": "Keifer",
+    "last_name": "Ramos",
+    "username": "keiferramos",
+    "contact_no": "0912345678",
+    "email": "keiferramos@gmail.com",
+    "password": "@Kimpoy2001",
+    "verify": "@Kimpoy2001",
+    "admin_pass": "superman",
+    "address": {
+      "block": "02",
+      "street": "Apitong",
+      "barangay": "Marikina Heights",
+      "city": "Marikina City",
+      "province": "Metro Manila",
+      "zip_code": "1810"
+    }
+  },
+  "user_info": {
+    "username": "KeiferRamos",
+    "password": "@Kimpoy2001"
+  }
+}
