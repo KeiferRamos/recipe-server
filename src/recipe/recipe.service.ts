@@ -1,9 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CreateRecipeInput } from './dto/create-recipe.input';
-import { UpdateRecipeInput } from './dto/update-recipe.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Recipe } from './entities/recipe.entity';
-import { Equal, In, Repository } from 'typeorm';
+import { Equal, In, Not, Repository } from 'typeorm';
+import { ValidationError } from 'class-validator';
+import { ValidationException } from 'src/decorator/metadata';
 
 @Injectable()
 export class RecipeService {
@@ -12,65 +17,61 @@ export class RecipeService {
     private readonly recipeRepository: Repository<Recipe>,
   ) {}
 
-  async create({ similar, ...rest }: CreateRecipeInput): Promise<Recipe> {
+  async createOrUpdate({
+    similar,
+    id,
+    ...rest
+  }: CreateRecipeInput): Promise<Recipe> {
     try {
-      const alreadyUsed = await this.recipeRepository.findOne({
-        where: [{ title: Equal(rest.title) }, { name: Equal(rest.name) }],
-      });
-
-      if (alreadyUsed) {
-        throw new BadRequestException('title or name is already in used!');
-      }
-
       const relatedRecipes = await this.recipeRepository.find({
         where: {
-          id: In(similar),
+          name: In(similar),
         },
-        relations: ['similar'],
+        relations: {
+          similar: true,
+        },
       });
 
-      const recipe = this.recipeRepository.create({
-        ...rest,
+      return this.recipeRepository.save({
+        id,
         similar: relatedRecipes,
+        ...rest,
       });
-      await this.recipeRepository.save(recipe);
-
-      return recipe;
     } catch (error) {
       throw new BadRequestException(error);
     }
   }
 
   findAll() {
-    return this.recipeRepository.find({ relations: ['similar'] });
+    return this.recipeRepository.find({
+      relations: {
+        similar: true,
+      },
+    });
   }
 
   findOne(id: string) {
     return this.recipeRepository.findOne({
       where: { id },
+      relations: {
+        similar: true,
+      },
     });
   }
 
-  async update(id: string, { similar, ...rest }: UpdateRecipeInput) {
-    let recipeToUpdate = await this.recipeRepository.findOne({
-      where: { id },
-      relations: ['similar'],
-    });
-
-    const similarRecipe = await this.recipeRepository.find({
-      where: {
-        id: In(similar),
+  async findSimilar(id: string) {
+    if (id) {
+      return this.recipeRepository.find({
+        where: { id: Not(Equal(id)) },
+        relations: {
+          similar: true,
+        },
+      });
+    }
+    return this.recipeRepository.find({
+      relations: {
+        similar: true,
       },
-    });
-
-    recipeToUpdate = Object.assign(recipeToUpdate, rest);
-    recipeToUpdate.similar = similarRecipe;
-
-    await this.recipeRepository.save(recipeToUpdate);
-
-    return this.recipeRepository.findOne({
-      where: { id },
-      relations: ['similar'],
     });
   }
 

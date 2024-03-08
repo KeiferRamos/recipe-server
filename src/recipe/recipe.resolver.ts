@@ -1,8 +1,7 @@
-import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { RecipeService } from './recipe.service';
 import { Recipe } from './entities/recipe.entity';
 import { CreateRecipeInput } from './dto/create-recipe.input';
-import { UpdateRecipeInput } from './dto/update-recipe.input';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Permission, Public } from 'src/decorator/metadata';
@@ -18,27 +17,25 @@ export class RecipeResolver {
   createRecipe(
     @Args('createRecipeInput') createRecipeInput: CreateRecipeInput,
   ) {
-    return this.recipeService.create(createRecipeInput);
+    return this.recipeService.createOrUpdate(createRecipeInput);
   }
 
   @Public()
-  @Query(() => [Recipe], { name: 'AllRecipe' })
+  @Query(() => [Recipe])
+  Similar(@Args('id') id: string) {
+    return this.recipeService.findSimilar(id);
+  }
+
+  @Public()
+  @Query(() => [Recipe], { name: 'recipes' })
   findAll() {
     return this.recipeService.findAll();
   }
 
   @Public()
-  @Query(() => Recipe, { name: 'Recipe' })
+  @Query(() => Recipe, { name: 'recipe' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.recipeService.findOne(id);
-  }
-
-  @Permission(Permissions.UPDATE_RECIPE)
-  @Mutation(() => Recipe)
-  updateRecipe(
-    @Args('updateRecipeInput') updateRecipeInput: UpdateRecipeInput,
-  ) {
-    return this.recipeService.update(updateRecipeInput.id, updateRecipeInput);
   }
 
   @Permission(Permissions.REMOVE_RECIPE)

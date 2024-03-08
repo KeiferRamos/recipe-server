@@ -3,6 +3,7 @@ import {
   registerDecorator,
   ValidatorConstraint,
   ValidationOptions,
+  ValidationArguments,
 } from 'class-validator';
 import { DataSource } from 'typeorm';
 

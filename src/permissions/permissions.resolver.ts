@@ -21,25 +21,14 @@ export class PermissionsResolver {
     return this.permissionsService.create(createPermissionInput);
   }
 
-  @Query(() => [Permission], { name: 'AllPermission' })
+  @Query(() => [Permission], { name: 'permissions' })
   findAll() {
     return this.permissionsService.findAll();
   }
 
-  @Query(() => Permission, { name: 'Permission' })
+  @Query(() => Permission, { name: 'permission' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.permissionsService.findOne(id);
-  }
-
-  @UserPermission(Permissions.UPDATE_PERMISSION)
-  @Mutation(() => Permission)
-  updatePermission(
-    @Args('updatePermissionInput') updatePermissionInput: UpdatePermissionInput,
-  ) {
-    return this.permissionsService.update(
-      updatePermissionInput.id,
-      updatePermissionInput,
-    );
   }
 
   @UserPermission(Permissions.REMOVE_PERMISSION)

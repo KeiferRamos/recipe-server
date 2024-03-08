@@ -31,11 +31,6 @@ export class PermissionsService {
     return this.permissionRepository.findOne({ where: { id } });
   }
 
-  async update(id: string, updatePermissionInput: UpdatePermissionInput) {
-    await this.permissionRepository.update(id, updatePermissionInput);
-    return this.permissionRepository.findOne({ where: { id } });
-  }
-
   async remove(id: string) {
     const permission = await this.permissionRepository.findOne({
       where: { id },

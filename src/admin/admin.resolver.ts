@@ -22,12 +22,13 @@ export class AdminResolver {
     return this.adminService.create(createAdminInput);
   }
 
-  @Query(() => [Admin], { name: 'AllAdmin' })
+  @Public()
+  @Query(() => [Admin], { name: 'admins' })
   findAll() {
     return this.adminService.findAll();
   }
 
-  @Query(() => Admin, { name: 'Admin' })
+  @Query(() => Admin, { name: 'admin' })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.adminService.findOne(id);
   }

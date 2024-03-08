@@ -1,11 +1,17 @@
 export enum ContentType {
-  TEXT = 'TEXT',
-  IMAGE = 'IMAGE',
+  TEXT = 'text',
+  IMAGE = 'image',
 }
 
 export enum CategoryType {
   SUPER_ADMIN = 'SUPER_ADMIN',
   ADMIN = 'ADMIN',
+}
+
+export enum TimeType {
+  HOURS = 'hours',
+  MINUTES = 'minutes',
+  SECONDS = 'seconds',
 }
 
 export enum Permissions {

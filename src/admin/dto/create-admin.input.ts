@@ -5,6 +5,7 @@ import {
   IsNumberString,
   IsOptional,
   IsString,
+  IsUUID,
   MinLength,
   Validate,
 } from 'class-validator';
@@ -14,6 +15,11 @@ import { IsUniqueUsername } from '../validator/unique-username.validate';
 
 @InputType()
 export class CreateAddressInput {
+  @IsUUID()
+  @IsOptional()
+  @Field({ nullable: true })
+  id?: string;
+
   @Field()
   @IsNumberString()
   block: string;
@@ -49,11 +55,16 @@ export class CreateAdminInput {
   @Field({ nullable: true })
   @IsAlpha()
   @IsOptional()
+  middle_name?: string;
+
+  @Field({ nullable: true })
+  @IsAlpha()
+  @IsOptional()
   last_name?: string;
 
   @Field(() => String)
   @MinLength(8)
-  @IsUniqueUsername({ message: 'Username Already Inused!' })
+  @IsString()
   username: string;
 
   @Field(() => String)

@@ -3,33 +3,29 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Blog } from './blog.entity';
+import { Recipe } from './recipe.entity';
 
 @ObjectType()
 @Entity()
-export class Content {
+export class Image {
   @PrimaryGeneratedColumn('uuid')
   @Field()
   id: string;
 
   @Column()
   @Field()
-  type: string;
+  square: string;
 
   @Column()
   @Field()
-  value: string;
+  landscape: string;
 
-  @Column()
-  @Field()
-  order: number;
-
-  @ManyToOne(() => Blog, (blog) => blog.content, {
+  @OneToOne(() => Recipe, (recipe) => recipe.image, {
     onDelete: 'CASCADE',
   })
   @JoinColumn()
-  blog: Blog;
+  recipe: Recipe;
 }

@@ -23,6 +23,10 @@ export class Admin {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
+  middle_name?: string;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   last_name?: string;
 
   @Column()
@@ -39,6 +43,7 @@ export class Admin {
   @OneToOne(() => Address, (address) => address.admin, {
     cascade: true,
     nullable: true,
+    eager: true,
   })
   @Field(() => Address, { nullable: true })
   address?: Address;
@@ -47,7 +52,11 @@ export class Admin {
   @Field({ nullable: true })
   email?: string;
 
-  @ManyToMany(() => Role, (role) => role.admin, { cascade: true })
+  @ManyToMany(() => Role, (role) => role.admin, {
+    cascade: true,
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   @JoinTable()
   @Field(() => [Role])
   roles: Role[];

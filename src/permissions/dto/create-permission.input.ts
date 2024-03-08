@@ -1,5 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString, IsUUID } from 'class-validator';
 
 @InputType()
 export class CreatePermissionInput {
@@ -10,4 +10,9 @@ export class CreatePermissionInput {
   @IsString()
   @Field()
   description: string;
+
+  @IsOptional()
+  @IsUUID()
+  @Field({ nullable: true })
+  id?: string;
 }

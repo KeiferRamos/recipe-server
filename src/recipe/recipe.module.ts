@@ -7,6 +7,9 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { AdminModule } from 'src/admin/admin.module';
+import { CookingTime } from './entities/cooking-time.entity';
+import { Image } from './entities/images.entity';
+import { UniqueConstrains } from './validation/unique.name';
 
 @Module({
   imports: [
@@ -15,7 +18,7 @@ import { AdminModule } from 'src/admin/admin.module';
     }),
     PassportModule,
     AdminModule,
-    TypeOrmModule.forFeature([Recipe]),
+    TypeOrmModule.forFeature([Recipe, CookingTime, Image]),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
@@ -23,6 +26,7 @@ import { AdminModule } from 'src/admin/admin.module';
       },
     }),
   ],
-  providers: [RecipeResolver, RecipeService],
+  providers: [RecipeResolver, RecipeService, UniqueConstrains],
+  exports: [UniqueConstrains],
 })
 export class RecipeModule {}

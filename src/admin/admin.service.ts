@@ -8,8 +8,6 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { loginAdminInput } from './dto/login-admin.input';
 import { RolesService } from 'src/roles/roles.service';
-import { CategoryType } from 'src/enums';
-import { Role } from 'src/roles/entities/role.entity';
 import { UserRoleInput } from './dto/update-user-role.input';
 
 @Injectable()
@@ -34,9 +32,9 @@ export class AdminService {
       const hash = await bcrypt.hash(password, salt);
 
       if (admin_pass === process.env.SUPER_ADMIN) {
-        roles = await this.roleService.findByName(CategoryType.SUPER_ADMIN);
+        roles = await this.roleService.findByName('User Manager');
       } else {
-        roles = await this.roleService.findByName(CategoryType.ADMIN);
+        roles = await this.roleService.findByName('Content Manager');
       }
 
       const admin = this.adminRepository.create({
@@ -56,13 +54,7 @@ export class AdminService {
     try {
       const admin = await this.adminRepository.findOne({
         where: { username },
-        relations: {
-          roles: {
-            permissions: true,
-          },
-        },
       });
-
       if (!admin) {
         throw new BadRequestException('username or password is incorrect');
       }
@@ -85,25 +77,12 @@ export class AdminService {
   }
 
   async findAll() {
-    return this.adminRepository.find({
-      relations: {
-        address: true,
-        roles: {
-          permissions: true,
-        },
-      },
-    });
+    return this.adminRepository.find({});
   }
 
   findOne(id: string) {
     return this.adminRepository.findOne({
       where: { id },
-      relations: {
-        address: true,
-        roles: {
-          permissions: true,
-        },
-      },
     });
   }
 
@@ -120,13 +99,13 @@ export class AdminService {
     return this.adminRepository.findOne({ where: { username } });
   }
 
-  async update(updateAdminInput: UpdateAdminInput, user: Admin) {
-    await this.adminRepository.update({ id: user.id }, { ...updateAdminInput });
-
-    return this.adminRepository.findOne({
-      where: { id: user.id },
-      relations: ['address'],
+  async update(inputs: UpdateAdminInput, { id }: Admin) {
+    const admin = await this.adminRepository.findOne({
+      where: {
+        id,
+      },
     });
+    return this.adminRepository.save({ ...admin, ...inputs });
   }
 
   async remove(id: string) {

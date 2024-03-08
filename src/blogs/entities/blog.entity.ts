@@ -17,11 +17,15 @@ export class Blog {
   @Field()
   banner_image: string;
 
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  trending: boolean;
+
   @Column()
   @Field()
   author: string;
 
-  @OneToMany(() => Content, (content) => content.blog)
+  @OneToMany(() => Content, (content) => content.blog, { cascade: true })
   @Field(() => [Content])
   content: Content[];
 }
